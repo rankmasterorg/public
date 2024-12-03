@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Meta Tags for SEO and Social Media -->
+    <meta name="description" content="RankMaster is almost ready to revolutionize school management. Stay tuned for updates and pre-register now!">
+    <meta name="keywords" content="RankMaster, school management, education, pre-register, upcoming, coming soon">
+    <meta name="author" content="RankMaster">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags for Social Media Sharing -->
+    <meta property="og:title" content="Coming Soon - RankMaster">
+    <meta property="og:description" content="RankMaster is almost ready to revolutionize school management. Stay tuned for updates and pre-register now!">
+    <meta property="og:image" content="https://raw.githubusercontent.com/rankmaster2024/rankmaster2024.github.io/343b450fc994b7d5cf100695b8bf4eecbbc43a0e/logo.jpg">
+    <meta property="og:url" content="https://www.rankmasterorg.web.app">
+    <meta property="og:type" content="website">
+    
+    <!-- Title -->
+    <title>Coming Soon - RankMaster</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://raw.githubusercontent.com/rankmaster2024/rankmaster2024.github.io/343b450fc994b7d5cf100695b8bf4eecbbc43a0e/logo.jpg" type="image/x-icon">
+
+    <!-- External CSS Link -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Coming Soon!</h1>
+        <p>RankMaster is almost ready to revolutionize school management. Stay tuned for updates!</p>
+
+        <!-- Countdown Timer -->
+        <div class="timer" id="countdown"></div>
+
+        <!-- Email Pre-Registration Form -->
+        <div class="email-section">
+            <input type="email" id="email" placeholder="Enter your email" />
+            <button type="button" id="registerBtn">Pre-Register</button>
+        </div>
+
+        <!-- Success Message -->
+        <div class="success-message" style="display: none;">
+            You will be notified about updates as soon as RankMaster is ready!
+        </div>
+
+        <!-- Social Links with Icons -->
+        <div class="social-links">
+            <a href="https://www.instagram.com/rankmasterofficial/" target="_blank" class="social-icon instagram">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" width="20" height="20" />
+                Instagram
+            </a>
+            <a href="https://t.me/RankMaster_org" target="_blank" class="social-icon telegram">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS61dA_KyDfVQmA4cuspw1GRX-AOvk2i8Tslw&usqp=CAU" alt="Telegram" width="20" height="20" />
+                Telegram
+            </a>
+        </div>
+
+        <footer>
+            &copy; 2024 RankMaster. All Rights Reserved.
+        </footer>
+    </div>
+
+    <!-- JavaScript File -->
+    <script type="module">
+        console.log("Welcome to RankMaster!");
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDXrCQK8hDKKSqU8dS20uiL72olPEZcnwM",
+            authDomain: "rankmasterorg.firebaseapp.com",
+            projectId: "rankmasterorg",
+            storageBucket: "rankmasterorg.firebasestorage.app",
+            messagingSenderId: "186482082681",
+            appId: "1:186482082681:web:9b65a28299c4f1d6fde5a8",
+            measurementId: "G-1T8M2B837T"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // DOM Elements
+        const registerBtn = document.getElementById('registerBtn');
+        const emailField = document.getElementById('email');
+        const successMessage = document.querySelector('.success-message');
+
+        // Register Button Click Event
+        registerBtn.addEventListener('click', async () => {
+            const email = emailField.value.trim();
+            if (!email) return; // Don't proceed if the email is empty
+
+            try {
+                // Add email to Firestore under "preRegistrations"
+                await addDoc(collection(db, "preRegistrations"), {
+                    email: email,
+                    timestamp: new Date(),
+                });
+
+                // Show success message
+                successMessage.style.display = 'block';
+
+                // Reset the email field after successful submission
+                emailField.value = '';
+            } catch (error) {
+                console.error("Error saving email:", error);
+            }
+        });
+    </script>
+</body>
+</html>
