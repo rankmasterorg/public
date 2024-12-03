@@ -1,0 +1,178 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body and HTML */
+body, html {
+    font-family: 'Arial', sans-serif;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* Modern gradient */
+    color: #fff;
+    text-align: center;
+}
+
+/* Container */
+.container {
+    width: 90%;
+    max-width: 600px;
+    padding: 20px;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* Matches the body gradient */
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    text-align: center;
+}
+
+/* Heading */
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #ffcc00; /* Highlighted with gold */
+    background: linear-gradient(90deg, #ffcc00, #ff9f1a); /* Gradient gold */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Tagline */
+p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    color: #ddd;
+}
+
+/* Countdown Timer */
+.timer {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 20px 0;
+    color: #00c6ff; /* Highlighted with a professional blue */
+}
+
+/* Email Section */
+.email-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    margin-top: 20px;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* Matches body background */
+    padding: 0;
+    border-radius: 25px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.email-section input[type="email"] {
+    padding: 12px 15px;
+    font-size: 1rem;
+    flex: 9;
+    border: none;
+    border-radius: 25px 0 0 25px;
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.1); /* Subtle transparent effect */
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.email-section input[type="email"]:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.email-section button {
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, #ff512f, #dd2476); /* Vibrant button gradient */
+    color: #fff;
+    border: none;
+    border-radius: 0 25px 25px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    flex: 1;
+}
+
+.email-section button:hover {
+    transform: scale(1.05);
+}
+
+/* Success Message */
+.success-message {
+    font-size: 1.2rem;
+    color: #28a745; /* Green color for success */
+    margin-top: 20px;
+    padding: 10px;
+    background-color: rgba(40, 167, 69, 0.1); /* Light green background */
+    border-radius: 5px;
+    display: inline-block;
+    text-align: center;
+}
+
+/* Social Links */
+.social-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* This controls the space between the icons */
+    margin-top: 20px;
+    flex-wrap: nowrap; /* Prevents wrapping */
+}
+
+.social-icon {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 1rem;
+    transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.social-icon img {
+    width: 20px;
+    height: 20px;
+}
+
+.social-icon:hover {
+    color: #ff512f; /* Matches button color */
+    transform: scale(1.1);
+}
+
+/* Footer */
+footer {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 30px;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    p {
+        font-size: 0.9rem;
+    }
+
+    .email-section {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .email-section input[type="email"],
+    .email-section button {
+        width: 100%;
+        border-radius: 25px;
+    }
+
+    .social-links {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
