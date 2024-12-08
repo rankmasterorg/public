@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+    <h1>Register for RankMaster</h1>
+    <form id="registerForm">
+        <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" required placeholder="Your Full Name">
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" required placeholder="Your Email">
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input type="password" id="password" required placeholder="Choose a Password">
+        </div>
+        <div>
+            <label for="schoolCode">School Code</label>
+            <input type="text" id="schoolCode" required placeholder="e.g. PB01">
+        </div>
+        <div>
+            <label for="classCode">Class Code (School-Class)</label>
+            <input type="text" id="classCode" required placeholder="e.g. PB01-12F">
+        </div>
+        <button type="button" id="registerBtn">Register</button>
+    </form>
+
+    <p id="error"></p>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+// Firebase Configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyDXrCQK8hDKKSqU8dS20uiL72olPEZcnwM",
+    authDomain: "rankmasterorg.firebaseapp.com",
+    projectId: "rankmasterorg",
+    storageBucket: "rankmasterorg.firebasestorage.app",
+    messagingSenderId: "186482082681",
+    appId: "1:186482082681:web:9b65a28299c4f1d6fde5a8",
+    measurementId: "G-1T8M2B837T"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// DOM elements
+const registerBtn = document.getElementById('registerBtn');
+const emailField = document.getElementById('email');
+const passwordField = document.getElementById('password');
+const schoolCodeField = document.getElementById('schoolCode');
+const classCodeField = document.getElementById('classCode');
+const nameField = document.getElementById('name');
+const errorText = document.getElementById('error');
+
+// Register button click event
+registerBtn.addEventListener('click', async () => {
+    const email = emailField.value.trim();
+    const password = passwordField.value.trim();
+    const schoolCode = schoolCodeField.value.trim();
+    const classCode = classCodeField.value.trim();
+    const name = nameField.value.trim();
+
+    if (!email || !password || !schoolCode || !classCode || !name) {
+        errorText.textContent = "All fields are required.";
+        return;
+    }
+
+    try {
+        // Fetch user role based on email and class
+        const userRole = await getUserRole(schoolCode, classCode, email);
+
+        if (!userRole) {
+            errorText.textContent = "Please contact your school to get access.";
+            errorText.style.color = "red";
+            return;
+        }
+
+        // Create user with Firebase Authentication (only if role is valid)
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // Save user data to Firestore
+        await saveUserData(user, userRole, schoolCode, classCode, name);
+
+        errorText.textContent = "Registration successful!";
+        errorText.style.color = "green";
+
+        // Redirect user based on role
+        if (userRole === "student") {
+            window.location.href = "studentpanel.html";
+        } else if (userRole === "teacher") {
+            window.location.href = "teacherpanel.html";
+        }
+    } catch (error) {
+        console.error("Error during registration:", error);
+        errorText.textContent = "Registration failed: " + error.message;
+        errorText.style.color = "red";
+    }
+});
+
+// Fetch user role from Firestore based on email
+async function getUserRole(schoolCode, classCode, email) {
+    // Check if the user is in the Students collection
+    const studentRef = doc(db, schoolCode, classCode, "Students", email);
+    const studentSnap = await getDoc(studentRef);
+    
+    if (studentSnap.exists()) {
+        return "student"; // User is a student
+    }
+
+    // Check if the user is in the Teachers collection
+    const teacherRef = doc(db, schoolCode, classCode, "Teachers", email);
+    const teacherSnap = await getDoc(teacherRef);
+
+    if (teacherSnap.exists()) {
+        return "teacher"; // User is a teacher
+    }
+
+    return null; // Role not found
+}
+
+// Save user data to Firestore
+async function saveUserData(user, role, schoolCode, classCode, name) {
+    const userRef = doc(db, "users", user.email);
+    await setDoc(userRef, {
+        email: user.email,
+        name: name,
+        role: role,
+        schoolCode: schoolCode,
+        classCode: classCode,
+    });
+}
+</script>
+</body>
+</html>
