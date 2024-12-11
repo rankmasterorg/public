@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RankMaster</title>
+    <style>
+        /* General Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            height: 100vh;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .hero-section {
+            width: 90%;
+            max-width: 1200px;
+            position: relative;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 3rem;  /* Decreased font size */
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: -webkit-linear-gradient(#fff, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .tagline {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin: 30px 0;
+            letter-spacing: 1px;
+        }
+
+        .tagline span {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .highlight {
+            color: #00ffff;
+            font-weight: bold;
+        }
+
+        .cta-button {
+            display: inline-block;
+            text-decoration: none;
+            color: #764ba2;
+            background: #00ffff;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+            margin-top: 30px;
+        }
+
+        .cta-button:hover {
+            background: #00d4e3;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .hero-section {
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 2.5rem;  /* Decreased font size for smaller screens */
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+            }
+
+            .cta-button {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (min-width: 769px) {
+            h1 {
+                font-size: 3.5rem;  /* Slightly reduced font size for desktop */
+            }
+
+            .tagline {
+                font-size: 1.8rem;
+            }
+
+            .cta-button {
+                padding: 18px 50px;
+                font-size: 1.3rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <section class="hero-section">
+        <h1>Welcome to RankMaster</h1>
+        <div class="tagline">
+            <span>Revolutionize your <span class="highlight">school management</span></span>
+            <span>Streamline <span class="highlight">processes</span> and boost <span class="highlight">productivity</span></span>
+            <span>Empower students for <span class="highlight">excellence</span></span>
+        </div>
+        <a href="learnmore.html" class="cta-button">Learn More</a>
+    </section>
+</body>
+</html>
