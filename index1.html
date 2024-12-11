@@ -42,13 +42,18 @@
     <div id="footer"></div>
 
     <script>
-        // Load header and footer dynamically
+        // Function to load external HTML files dynamically
         const loadHTML = async (selector, file) => {
             try {
                 const response = await fetch(file);
                 if (response.ok) {
                     const text = await response.text();
                     document.querySelector(selector).innerHTML = text;
+
+                    // After loading header/footer, initialize interactive elements
+                    if (selector === '#header') {
+                        initializeHeader();
+                    }
                 } else {
                     console.error(`Failed to load ${file}: ${response.status}`);
                 }
@@ -57,7 +62,27 @@
             }
         };
 
-        // Load header.html and footer.html
+        // Initialize header menu functionality
+        const initializeHeader = () => {
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('active');
+                });
+
+                const links = document.querySelectorAll('.mobile-menu a, nav ul li a');
+                links.forEach(link => {
+                    link.addEventListener('click', () => {
+                        links.forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                    });
+                });
+            }
+        };
+
+        // Load header.html and footer.html dynamically
         loadHTML('#header', 'header.html');
         loadHTML('#footer', 'footer.html');
     </script>
