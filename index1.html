@@ -3,16 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RankMaster</title>
+    <title>RankMaster - Empowering Education, Simplifying Management</title>
     <style>
         /* Center content styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
         .main-content {
             padding: 40px 20px;
             max-width: 1200px;
             margin: 0 auto;
             text-align: center;
-            font-family: Arial, sans-serif;
-            color: #ccc;
+            color: #333;
         }
 
         .main-content h1 {
@@ -25,18 +31,140 @@
             font-size: 18px;
             line-height: 1.6;
         }
+
+        /* Hero Section */
+        .hero {
+            background-color: #111;
+            color: #fff;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 24px;
+            margin-bottom: 40px;
+        }
+
+        /* Feature Section */
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .feature {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .feature h3 {
+            color: #00ffff;
+            font-size: 24px;
+        }
+
+        .feature p {
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        /* CTA Section */
+        .cta {
+            background-color: #00ffff;
+            color: #111;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .cta button {
+            background-color: #111;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .cta button:hover {
+            background-color: #00b3b3;
+        }
+
+        /* Footer Section */
+        .footer {
+            background-color: #111;
+            color: #ccc;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
+
     <!-- Header -->
     <div id="header"></div>
 
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Welcome to RankMaster</h1>
+        <p>Empowering Education, Simplifying Management</p>
+        <p>Your journey to smarter school management begins here.</p>
+        <a href="#cta"><button>Get Started</button></a>
+    </section>
+
     <!-- Main Content -->
     <div class="main-content">
-        <h1>Welcome to RankMaster</h1>
-        <p>RankMaster helps you manage school activities and student information seamlessly.</p>
-        <p>Navigate through the features, explore our pricing plans, and connect with us to learn more about how we empower education.</p>
+        <h1>About RankMaster</h1>
+        <p>RankMaster helps schools manage activities, track performance, and keep students and teachers connected. It's a complete school management system designed to make education more efficient and streamlined.</p>
     </div>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="feature">
+            <h3>Easy School Management</h3>
+            <p>Manage your school’s data, events, and attendance in one place.</p>
+        </div>
+        <div class="feature">
+            <h3>Track Student Performance</h3>
+            <p>Track academic performance, rankings, and achievements easily.</p>
+        </div>
+        <div class="feature">
+            <h3>Instant Communication</h3>
+            <p>Keep students, parents, and teachers connected with real-time updates.</p>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section id="cta" class="cta">
+        <h2>Ready to experience RankMaster?</h2>
+        <p>Start your free trial today and see how RankMaster can transform your school management.</p>
+        <a href="signup.html"><button>Start Your Free Trial</button></a>
+    </section>
 
     <!-- Footer -->
     <div id="footer"></div>
@@ -86,5 +214,6 @@
         loadHTML('#header', 'header.html');
         loadHTML('#footer', 'footer.html');
     </script>
+
 </body>
 </html>
