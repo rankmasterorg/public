@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RankMaster</title>
+    <style>
+        /* Center content styling */
+        .main-content {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: #ccc;
+        }
+
+        .main-content h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #00ffff;
+        }
+
+        .main-content p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div id="header"></div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h1>Welcome to RankMaster</h1>
+        <p>RankMaster helps you manage school activities and student information seamlessly.</p>
+        <p>Navigate through the features, explore our pricing plans, and connect with us to learn more about how we empower education.</p>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+    <script>
+        // Load header and footer dynamically
+        const loadHTML = async (selector, file) => {
+            try {
+                const response = await fetch(file);
+                if (response.ok) {
+                    const text = await response.text();
+                    document.querySelector(selector).innerHTML = text;
+                } else {
+                    console.error(`Failed to load ${file}: ${response.status}`);
+                }
+            } catch (error) {
+                console.error(`Error loading ${file}:`, error);
+            }
+        };
+
+        // Load header.html and footer.html
+        loadHTML('#header', 'header.html');
+        loadHTML('#footer', 'footer.html');
+    </script>
+</body>
+</html>
