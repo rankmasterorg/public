@@ -6,69 +6,96 @@
     <title>RankMaster</title>
     <style>
         /* General Styles */
-        body, html {
+        body {
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            font-family: 'Arial', sans-serif;
-            overflow-x: hidden;
-            height: 100vh;
+            background-color: #f4f4f4;
         }
 
-        body {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: #fff;
-            display: flex;
+        /* Mobile Menu Styles */
+        .mobile-menu {
+            display: none;
             flex-direction: column;
-            justify-content: space-between;
-            text-align: center;
+            gap: 20px;
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 25px;
+            width: 250px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
-        /* Main Content Area */
-        #main-content {
-            width: 90%;
-            max-width: 1200px;
-            flex-grow: 1;
-        }
-
-        /* Footer Styling */
-        #footer {
-            padding: 20px;
-            background: #333;
+        .mobile-menu a {
+            font-size: 18px;
             color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: transform 0.3s ease, color 0.3s ease;
         }
 
+        .mobile-menu a:hover {
+            color: #00ffff;
+            transform: translateY(-3px);
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <div id="header"></div>
+    <!-- Header Section -->
+    <div id="header-placeholder"></div>
 
-    <!-- Main Content Area where home.html will be loaded -->
-    <div id="main-content"></div>
+    <!-- Home Section (Loaded dynamically) -->
+    <div id="home-placeholder"></div>
 
-    <!-- Footer -->
-    <div id="footer"></div>
+    <!-- Footer Section -->
+    <div id="footer-placeholder"></div>
 
     <script>
-        // Function to load external HTML content into the given selector
-        const loadHTML = async (selector, file) => {
-            try {
-                const response = await fetch(file);
-                if (response.ok) {
-                    const content = await response.text();
-                    document.querySelector(selector).innerHTML = content;
-                } else {
-                    console.error(`Error loading ${file}: ${response.status}`);
-                }
-            } catch (error) {
-                console.error(`Error loading ${file}:`, error);
-            }
-        };
+        // Function to load external HTML content
+        function loadHTML(url, elementId) {
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById(elementId).innerHTML = data;
+                    // Re-initialize JavaScript functionality if needed
+                    if (elementId === 'header-placeholder') {
+                        const menuToggle = document.getElementById('menu-toggle');
+                        const mobileMenu = document.getElementById('mobile-menu');
 
-        // Load header.html, home.html, and footer.html dynamically
-        loadHTML('#header', 'header.html');
-        loadHTML('#main-content', 'home.html');
-        loadHTML('#footer', 'footer.html');
+                        // Menu toggle functionality
+                        menuToggle.addEventListener('click', () => {
+                            mobileMenu.classList.toggle('active');
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading the HTML file:', error);
+                    document.getElementById(elementId).innerHTML = '<p>Failed to load content</p>';
+                });
+        }
+
+        // Load the header, home, and footer content dynamically
+        window.onload = () => {
+            loadHTML('header.html', 'header-placeholder');
+            loadHTML('home.html', 'home-placeholder');
+            loadHTML('footer.html', 'footer-placeholder');
+        };
     </script>
 </body>
 </html>
