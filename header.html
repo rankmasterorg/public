@@ -132,10 +132,10 @@
             <!-- Navigation Menu -->
             <nav>
                 <ul>
-                    <li><a href="#home" class="active">Home</a></li>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="home.html" class="active">Home</a></li>
+                    <li><a href="features.html">Features</a></li>
+                    <li><a href="pricing.html">Pricing</a></li>
+                    <li><a href="contact.html">Contact</a></li>
                 </ul>
             </nav>
 
@@ -161,12 +161,11 @@
             mobileMenu.classList.toggle('active');
         });
 
-        // Handle active link on click
-        const links = document.querySelectorAll('nav ul li a, .mobile-menu a');
+        // Ensure links in both mobile and desktop menus work
+        const links = document.querySelectorAll('a');
         links.forEach(link => {
             link.addEventListener('click', () => {
-                links.forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
+                window.location.href = link.getAttribute('href');
             });
         });
     </script>
