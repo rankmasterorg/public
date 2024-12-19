@@ -3,102 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - RankMaster</title>
+    <title>Redirecting...</title>
+    <meta http-equiv="refresh" content="0; url=index.html">
 </head>
 <body>
-    <h1>Login to RankMaster</h1>
-    <form id="loginForm">
-        <div>
-            <label for="email">Email</label>
-            <input type="email" id="email" required placeholder="Your Email">
-        </div>
-        <div>
-            <label for="password">Password</label>
-            <input type="password" id="password" required placeholder="Your Password">
-        </div>
-        <button type="button" id="loginBtn">Login</button>
-    </form>
-
-    <p id="error"></p>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
-
-// Firebase Configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyDXrCQK8hDKKSqU8dS20uiL72olPEZcnwM",
-    authDomain: "rankmasterorg.firebaseapp.com",
-    projectId: "rankmasterorg",
-    storageBucket: "rankmasterorg.firebasestorage.app",
-    messagingSenderId: "186482082681",
-    appId: "1:186482082681:web:9b65a28299c4f1d6fde5a8",
-    measurementId: "G-1T8M2B837T"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-// DOM elements
-const loginBtn = document.getElementById('loginBtn');
-const emailField = document.getElementById('email');
-const passwordField = document.getElementById('password');
-const errorText = document.getElementById('error');
-
-// Login button click event
-loginBtn.addEventListener('click', async () => {
-    const email = emailField.value.trim();
-    const password = passwordField.value.trim();
-
-    if (!email || !password) {
-        errorText.textContent = "Please enter both email and password.";
-        errorText.style.color = "red";
-        return;
-    }
-
-    try {
-        // Sign in with Firebase Authentication
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-
-        // Fetch user data from Firestore to get the role
-        const userData = await getUserData(user.email);
-
-        if (userData) {
-            // Redirect to the respective panel based on user role
-            if (userData.role === "student") {
-                window.location.href = "studentpanel.html";
-            } else if (userData.role === "teacher") {
-                window.location.href = "teacherpanel.html";
-            } else {
-                errorText.textContent = "User role is not valid.";
-                errorText.style.color = "red";
-            }
-        } else {
-            errorText.textContent = "User data not found in Firestore.";
-            errorText.style.color = "red";
-        }
-    } catch (error) {
-        console.error("Error during login:", error);
-        errorText.textContent = "Login failed: " + error.message;
-        errorText.style.color = "red";
-    }
-});
-
-// Fetch user data from Firestore based on email
-async function getUserData(email) {
-    const userRef = doc(db, "users", email);
-    const userSnap = await getDoc(userRef);
-
-    if (userSnap.exists()) {
-        return userSnap.data(); // Return user data (including role)
-    } else {
-        return null; // If no data found
-    }
-}
-</script>
+    <p>If you are not redirected automatically, <a href="index.html">click here</a>.</p>
 </body>
 </html>
