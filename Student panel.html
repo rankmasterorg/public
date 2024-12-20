@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Panel - RankMaster</title>
+</head>
+<body>
+    <h1>Student Dashboard</h1>
+
+    <div>
+        <p id="studentName">Name: Loading...</p>
+        <p id="studentEmail">Email: Loading...</p>
+    </div>
+
+    <div>
+        <h2>Upcoming Events</h2>
+        <p>Science Fair: December 25, 2024</p>
+        <p>Sports Day: January 10, 2025</p>
+    </div>
+
+    <div>
+        <h2>Your Attendance</h2>
+        <p>You have attended 85% of your classes this semester.</p>
+    </div>
+
+    <div>
+        <h2>Recent Grades</h2>
+        <p>Mathematics: 92%</p>
+        <p>Physics: 88%</p>
+        <p>Chemistry: 90%</p>
+    </div>
+
+    <label for="nameInput">Edit Name:</label>
+    <input type="text" id="nameInput" placeholder="Enter new name">
+    <button id="saveButton">Save Changes</button>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDXrCQK8hDKKSqU8dS20uiL72olPEZcnwM",
+            authDomain: "rankmasterorg.firebaseapp.com",
+            projectId: "rankmasterorg",
+            storageBucket: "rankmasterorg.firebasestorage.app",
+            messagingSenderId: "186482082681",
+            appId: "1:186482082681:web:9b65a28299c4f1d6fde5a8",
+            measurementId: "G-1T8M2B837T"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const email = urlParams.get("email");
+        const schoolCode = urlParams.get("schoolCode");
+        const classCode = urlParams.get("classCode");
+
+        // Validate URL parameters
+        if (!email || !schoolCode || !classCode) {
+            alert("Invalid URL parameters. Ensure 'email', 'schoolCode', and 'classCode' are provided.");
+            throw new Error("Missing URL parameters.");
+        }
+
+        const studentName = document.getElementById("studentName");
+        const studentEmail = document.getElementById("studentEmail");
+        const nameInput = document.getElementById("nameInput");
+        const saveButton = document.getElementById("saveButton");
+        let isLoading = false;
+
+        // Function to toggle loading state
+        function toggleLoadingState(state) {
+            isLoading = state;
+            saveButton.disabled = state;
+            saveButton.textContent = state ? "Saving..." : "Save Changes";
+        }
+
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                alert("You must be logged in to access this page.");
+                window.location.href = "/login.html";
+                return;
+            }
+
+            try {
+                const studentDocRef = doc(db, `${schoolCode}/${classCode}/Students/${email}`);
+                const studentDoc = await getDoc(studentDocRef);
+
+                if (studentDoc.exists()) {
+                    const data = studentDoc.data();
+                    studentName.textContent = `Name: ${data.Name}`;
+                    studentEmail.textContent = `Email: ${email}`;
+                    nameInput.value = data.Name;
+
+                    saveButton.onclick = async () => {
+                        const newName = nameInput.value.trim();
+                        if (newName) {
+                            try {
+                                toggleLoadingState(true);
+                                await updateDoc(studentDocRef, { Name: newName });
+                                alert("Changes saved successfully!");
+                                studentName.textContent = `Name: ${newName}`;
+                            } catch (error) {
+                                console.error("Error updating name:", error);
+                                alert("Error saving changes.");
+                            } finally {
+                                toggleLoadingState(false);
+                            }
+                        } else {
+                            alert("Name cannot be empty.");
+                        }
+                    };
+                } else {
+                    alert("Student data not found.");
+                }
+            } catch (error) {
+                console.error("Error fetching student data:", error);
+                alert("An error occurred while loading student data. Please try again later.");
+            }
+        });
+    </script>
+</body>
+</html>
