@@ -508,49 +508,53 @@
       const errorText = document.getElementById("error");
 
       // Login button click event
-      loginBtn.addEventListener("click", async () => {
-        const email = emailField.value.trim();
-        const password = passwordField.value.trim();
+      // Login button click event
+loginBtn.addEventListener("click", async () => {
+  const email = emailField.value.trim();
+  const password = passwordField.value.trim();
 
-        if (!email || !password) {
-          errorText.textContent = "Please enter both email and password.";
-          errorText.style.color = "red";
-          return;
-        }
+  if (!email || !password) {
+    errorText.textContent = "Please enter both email and password.";
+    errorText.style.color = "red";
+    return;
+  }
 
-        try {
-          // Sign in with Firebase Authentication
-          const userCredential = await signInWithEmailAndPassword(
-            auth,
-            email,
-            password
-          );
-          const user = userCredential.user;
+  try {
+    // Sign in with Firebase Authentication
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredential.user;
 
-          // Fetch user data from Firestore to get the role
-          const userData = await getUserData(user.email);
+    // Fetch user data from Firestore to get the role
+    const userData = await getUserData(user.email);
 
-          if (userData) {
-            // Redirect to the respective panel based on user role
-            if (userData.role === "student") {
-              window.location.href = "studentpanel.html";
-            } else if (userData.role === "teacher") {
-              window.location.href = "teacherpanel.html";
-            } else {
-              errorText.textContent = "User role is not valid.";
-              errorText.style.color = "red";
-            }
-          } else {
-            errorText.textContent = "User data not found in Firestore.";
-            errorText.style.color = "red";
-          }
-        } catch (error) {
-          console.error("Error during login:", error);
-          errorText.textContent = "Login failed: " + error.message;
-          errorText.style.color = "red";
-        }
-      });
+    if (userData) {
+      // Redirect to the respective panel based on user role
+      const role = userData.role;
 
+      if (role === "student") {
+        // Pass the email and role via URL
+        window.location.href = `studentpanel.html?email=${encodeURIComponent(user.email)}&role=${encodeURIComponent(role)}`;
+      } else if (role === "teacher") {
+        // Pass the email and role via URL
+        window.location.href = `teacherpanel.html?email=${encodeURIComponent(user.email)}&role=${encodeURIComponent(role)}`;
+      } else {
+        errorText.textContent = "User role is not valid.";
+        errorText.style.color = "red";
+      }
+    } else {
+      errorText.textContent = "User data not found in Firestore.";
+      errorText.style.color = "red";
+    }
+  } catch (error) {
+    console.error("Error during login:", error);
+    errorText.textContent = "Login failed: " + error.message;
+    errorText.style.color = "red";
+  }
+});
       
 // Call this after successful registration
 saveUserData("user@example.com", "student");
