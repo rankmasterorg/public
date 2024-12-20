@@ -551,6 +551,15 @@
         }
       });
 
+      import { setDoc, doc } from "firebase/firestore";
+
+async function saveUserData(email, role) {
+  const userRef = doc(db, "users", email);
+  await setDoc(userRef, { role });
+}
+
+// Call this after successful registration
+saveUserData("user@example.com", "student");
       // Fetch user data from Firestore based on email
       async function getUserData(email) {
         const userRef = doc(db, "users", email);
